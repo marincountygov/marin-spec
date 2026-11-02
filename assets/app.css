@@ -1,0 +1,251 @@
+/*
+  App-specific styles only.
+  Load order: vendor/marinos/marinos.css, then this file.
+
+  The shell bundles the shared Marin UI/Pico baseline and shell components.
+  Use the components and tokens provided by the pinned shell before adding CSS.
+  Scope new rules to the application's workflow or its own class prefix.
+  Do not override shell-owned header, banner, footer, or information-section
+  layout here. Shared fixes belong upstream in marin-app-shell (or marin-ui),
+  followed by a reviewed shell release, not an edit to vendor/marinos/.
+*/
+
+/* Steps sit in the shell's collapsible left column, the same layout as the Marin Mentions
+   filter column. */
+.filter-toggle[hidden],
+.spec-progress[hidden] {
+  display: none;
+}
+
+.spec-progress {
+  margin: 0 0 1rem;
+  font-weight: 700;
+}
+
+.spec-steps {
+  display: block;
+}
+
+.spec-steps ol {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.spec-steps li {
+  display: block;
+  margin: 0 0 0.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.spec-steps a {
+  display: block;
+  margin: 0;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--pico-border-radius);
+  color: var(--app-text);
+  text-decoration: none;
+}
+
+.spec-steps a:hover {
+  background: var(--app-bg-soft);
+}
+
+.spec-steps a[aria-current="step"] {
+  background: var(--app-accent);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+@media (prefers-color-scheme: dark) {
+  .spec-steps a[aria-current="step"] {
+    color: #101418;
+  }
+}
+
+.spec-step[hidden] {
+  display: none;
+}
+
+.spec-step > h2 {
+  margin-top: 0;
+}
+
+.spec-step:not([hidden]) ~ .spec-step:not([hidden]) {
+  margin-top: 2.5rem;
+}
+
+
+.spec-interview h4 {
+  margin: 1rem 0 0.25rem;
+  font-size: 1rem;
+}
+
+.spec-terms dt {
+  font-weight: 700;
+}
+
+.spec-terms dd {
+  margin: 0 0 0.5rem;
+}
+
+
+.spec-prompt__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.spec-prompt__actions .action-button {
+  margin: 0;
+}
+
+.spec-prompt__status:empty {
+  display: none;
+}
+
+.spec-prompt__text {
+  margin: 0;
+  padding: 1rem;
+  max-height: 24rem;
+  overflow-y: auto;
+  border: 1px solid var(--app-border);
+  border-radius: var(--pico-border-radius);
+  background: var(--app-bg-soft);
+  color: var(--app-text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Next is the solid main action and ends with an arrow. Previous is a quiet icon button like
+   Copy, Print and Download, 44 px square. The shell sizes declarative icons only inside
+   .action-button, so the arrow on the solid Next button is sized here until it does the same. */
+.spec-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0;
+}
+
+.spec-pager .action-button {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  margin: 0;
+}
+
+.spec-pager .primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.spec-pager .primary > svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.spec-pager [hidden] {
+  display: none;
+}
+
+/* With the steps column open on a wide screen the highlighted step already says where you are. */
+@media (min-width: 851px) {
+  .search-layout[data-filters="open"] .spec-progress {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+/* Each part of a step is a box, as in the Marin Learn notes: the card look without the shadow,
+   on the surface color. */
+.spec-box {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--app-border);
+  border-radius: var(--pico-border-radius);
+  background: var(--app-surface);
+}
+
+.spec-box > :last-child {
+  margin-bottom: 0;
+}
+
+.spec-box h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 576px) {
+  .spec-box {
+    padding: 1rem;
+  }
+}
+
+/* "On this page" is a right-hand column on wide screens and sits above the step on narrow ones, as in the
+   Marin Learn notes. */
+.spec-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 14rem;
+  column-gap: 2rem;
+  align-items: start;
+}
+
+.spec-main {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.spec-toc-holder {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
+}
+
+.spec-toc-holder:empty {
+  display: none;
+}
+
+@media (max-width: 850px) {
+  .spec-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .spec-main,
+  .spec-toc-holder {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .spec-toc-holder {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.spec-box {
+  scroll-margin-top: 1rem;
+}
+
+/* Pico makes every nav a flex row; the list's heading sits above its links. */
+.spec-toc.toc {
+  display: block;
+}

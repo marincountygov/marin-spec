@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!-- BEGIN generated security meta: python3 scripts/sync-security-meta.py --write -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://marincountygov.github.io/marin-os/catalog.json https://marincountygov.github.io/marin-os/data/lighthouse.json https://marincountygov.github.io/marin-os/data/tech.json https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <!-- END generated security meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Marin Spec | County of Marin</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%23000'/%3E%3Cg fill='none' stroke='%23e5b53b' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round' transform='translate(9,9) scale(1.25)'%3E%3Ccircle cx='6' cy='19' r='3'/%3E%3Cpath d='M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15'/%3E%3Ccircle cx='18' cy='5' r='3'/%3E%3C/g%3E%3C/svg%3E">
+    <meta name="description" content="Turn project research into a build-ready specification with your own AI tool.">
+    <link rel="stylesheet" href="vendor/marinos/marinos.css">
+    <link rel="stylesheet" href="assets/app.css">
+    <script src="vendor/marinos/marinos.js" defer></script>
+    <script src="assets/app.js" defer></script>
+  </head>
+  <body>
+    <noscript>
+      <div class="container app-alert app-alert--warning">
+        JavaScript is required to display the MarinOS interface. The steps and prompts below still work, but the Copy prompt and Next buttons need JavaScript.
+      </div>
+    </noscript>
+
+    <marin-os-banner></marin-os-banner>
+
+    <marin-app-header app-name="Marin Spec" app-description="Turn project research into a build-ready specification.">
+      <template data-icon>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>
+        </svg>
+      </template>
+    </marin-app-header>
+
+    <main id="main" class="container app-main">
+      <section id="start" data-tab-section="start" aria-label="Marin Spec">
+        <div class="search-layout">
+          <div class="search-side">
+            <button type="button" class="filter-toggle" data-filter-toggle="steps" data-filter-label="Steps" aria-controls="steps-panel" hidden></button>
+            <aside id="steps-panel" class="search-sidebar" aria-labelledby="steps-title">
+              <div class="search-panel-header">
+                <h2 class="search-panel-title" id="steps-title">Steps</h2>
+              </div>
+              <nav class="spec-steps" aria-labelledby="steps-title">
+                <ol>
+                  <li><a href="#prepare" aria-current="step">1. Prepare</a></li>
+                  <li><a href="#analyze">2. Analyze</a></li>
+                  <li><a href="#resolve">3. Resolve</a></li>
+                  <li><a href="#spec">4. Spec</a></li>
+                  <li><a href="#review">5. Review</a></li>
+                  <li><a href="#build">6. Build</a></li>
+                </ol>
+              </nav>
+            </aside>
+          </div>
+          <div class="search-results">
+            <p class="spec-progress" hidden></p>
+            <div class="spec-body">
+            <div class="spec-toc-holder"></div>
+            <div class="spec-main">
+        <section id="prepare" class="spec-step" aria-labelledby="prepare-heading">
+          <h2 id="prepare-heading">Prepare</h2>
+          <p>Gather what you have about the project. Keep the files on your computer. You upload them to your AI tool in the next step.</p>
+          <div class="spec-box">
+          <h3>Gather these</h3>
+          <p>An interview transcript is enough to start. The more you add, the better the spec.</p>
+          <ul>
+            <li>Interview transcript</li>
+            <li>Project notes</li>
+            <li>Existing forms</li>
+            <li>Screenshots</li>
+            <li>Process documents</li>
+            <li>Policies</li>
+            <li>Spreadsheets or data</li>
+            <li>Existing requirements</li>
+            <li>Technical documentation</li>
+            <li>Related websites or links</li>
+            <li>Existing code or GitHub repositories</li>
+          </ul>
+          </div>
+          <div class="spec-box">
+          <h3>Reduce personal information first</h3>
+          <p>Your files may name residents or staff. Take out what the project does not need.</p>
+          <ul>
+            <li>Replace names with roles, such as "Resident A" or "Staff member 1".</li>
+            <li>Take out emails, phone numbers, addresses, and ID numbers.</li>
+            <li>Clean spreadsheets with <a href="https://marincountygov.github.io/marin-anonymizer/">Marin Anonymizer</a>. Edit transcripts and documents by hand.</li>
+            <li>If the project needs real records, use only the AI tool your department has approved for that information.</li>
+          </ul>
+          <p>This lowers the risk. It does not remove it. You are still responsible for what you upload.</p>
+          </div>
+          <div class="spec-box">
+          <h3>Interview your project owner</h3>
+          <p>Ask these questions in a conversation.</p>
+          <ul>
+            <li>Use roles, not names.</li>
+            <li>Skip any that are already answered.</li>
+            <li>Record the conversation and save the transcript.</li>
+          </ul>
+          <div class="spec-interview">
+          <!-- BEGIN interview -->
+<h4>Project</h4>
+<ul>
+<li>What are we trying to build?</li>
+<li>What problem are we trying to solve?</li>
+<li>Why does this matter now?</li>
+<li>Who owns the project?</li>
+<li>Who will look after it once it is live?</li>
+<li>Who should test it before it goes live?</li>
+</ul>
+<h4>Users</h4>
+<ul>
+<li>Who will use this?</li>
+<li>What are they trying to do?</li>
+<li>What problems do they face today?</li>
+<li>Is this for County staff, the public, or both?</li>
+</ul>
+<h4>Current experience</h4>
+<ul>
+<li>How does this work today?</li>
+<li>What works well?</li>
+<li>What causes problems?</li>
+<li>What tools or systems are involved?</li>
+</ul>
+<h4>Future experience</h4>
+<ul>
+<li>What should someone be able to do?</li>
+<li>What should be easier?</li>
+<li>What should happen from start to finish?</li>
+</ul>
+<h4>Content and data</h4>
+<ul>
+<li>What information does the project need?</li>
+<li>Where does the information come from?</li>
+<li>Who keeps it up to date?</li>
+<li>Is any of it private or sensitive?</li>
+<li>Will the project handle personal information about residents or staff?</li>
+</ul>
+<h4>Technology</h4>
+<ul>
+<li>What systems must this connect to?</li>
+<li>Are there existing websites, applications, APIs, or repositories involved?</li>
+</ul>
+<h4>Access</h4>
+<ul>
+<li>Who can see the information?</li>
+<li>Who can create or change information?</li>
+<li>Are there different roles?</li>
+</ul>
+<h4>Constraints</h4>
+<ul>
+<li>Are there policies, laws, deadlines, technology limits, or other requirements we need to know about?</li>
+</ul>
+<h4>Success</h4>
+<ul>
+<li>What would make this project successful?</li>
+<li>How will we know it works?</li>
+</ul>
+<h4>Before you finish</h4>
+<ul>
+<li>Is there anything we did not ask that we should have?</li>
+<li>Who else should we talk to?</li>
+<li>Which documents or examples can you share?</li>
+</ul>
+<!-- END interview -->
+          </div>
+          </div>
+          <div class="spec-box">
+          <h3>What you get</h3>
+          <ul>
+            <li>An interview transcript</li>
+            <li>A folder of project files</li>
+          </ul>
+          </div>
+          <div class="spec-box">
+            <h3>You're ready when</h3>
+            <ul>
+              <li>You have a transcript and the files you want to use.</li>
+              <li>You have reduced personal information in them.</li>
+            </ul>
+          </div>
+          <p class="spec-pager"><button type="button" class="primary" data-next-step="analyze" data-icon-end="arrow-right" hidden>Next: analyze</button></p>
+        </section>
+
+        <section id="analyze" class="spec-step" aria-labelledby="analyze-heading">
+          <h2 id="analyze-heading">Analyze</h2>
+          <p>Your AI tool reads everything and sorts what it finds. It does not write the spec yet.</p>
+          <div class="spec-box">
+          <h3>What you do</h3>
+          <ol>
+            <li>Open your AI tool (Claude, ChatGPT, or Copilot) and start a new conversation.</li>
+            <li>Upload the interview transcript.</li>
+            <li>Upload your supporting project files.</li>
+            <li>Copy the analysis prompt, paste it into the message box, and send it.</li>
+            <li>Wait for the reply. Read it. If something is wrong, tell the tool in a new message.</li>
+          </ol>
+          <p>Stuck? See <a href="#about">If something goes wrong</a> in About.</p>
+
+          </div>
+        <div class="spec-prompt spec-box">
+          <h3>Analysis prompt</h3>
+          <p>Paste this after you upload your files.</p>
+          <div class="spec-prompt__actions">
+            <button type="button" class="action-button" data-icon="copy" data-copy-prompt="prompt-01-analyze" hidden>Copy prompt</button>
+            <span class="spec-prompt__status" role="status"></span>
+          </div>
+          <!-- BEGIN prompt 01-analyze -->
+<pre class="spec-prompt__text" id="prompt-01-analyze" tabindex="0" role="region" aria-label="analyze prompt text">You are helping a County of Marin team write a build-ready specification. This is the analyze step.
+
+Read every file and message I have shared in this conversation, including the interview transcript and supporting material. Do not write the specification yet.
+
+Find and list the following. Use a short heading for each.
+
+1. Project problem
+2. Goals
+3. Users and what they need
+4. Current experience
+5. Desired experience
+6. Workflows
+7. Requirements
+8. Content
+9. Data
+10. Integrations and systems
+11. Constraints (policies, laws, deadlines, technology limits)
+12. Accessibility considerations
+13. Security and privacy considerations
+14. AI considerations (only if the finished app itself would use AI)
+15. Success measures
+16. Conflicting information
+17. Missing information
+
+Label every item with one of these four evidence statuses:
+
+- Confirmed: the material says so directly. Name the source.
+- Inferred: the material reasonably implies it but does not say it.
+- Recommended: you or a County of Marin standard suggest it.
+- Open question: a decision is still needed.
+
+Rules:
+
+- Never present an inferred or recommended item as confirmed.
+- Do not invent facts, users, systems, or requirements.
+- Do not assume the finished app uses AI because AI is helping to build it.
+- Do not repeat personal information from the material, such as names, emails, phone numbers, addresses, or ID numbers. Refer to people by role. Under security and privacy, list the types of personal information you found, not the values.
+- Use plain language.
+
+End with a short list of what you could not find in the material. Then wait for me.</pre>
+<!-- END prompt 01-analyze -->
+        </div>
+          <div class="spec-box">
+          <h3>What you get back</h3>
+          <p>A reply with a short heading for each topic, from the project problem to missing information. Every item has one of these labels:</p>
+          <dl class="spec-terms">
+            <dt>Confirmed</dt>
+            <dd>Your material says it directly.</dd>
+            <dt>Inferred</dt>
+            <dd>Your material implies it but does not say it.</dd>
+            <dt>Recommended</dt>
+            <dd>The AI tool or a County standard suggests it.</dd>
+            <dt>Open question</dt>
+            <dd>Someone still needs to decide.</dd>
+          </dl>
+          </div>
+          <div class="spec-box">
+            <h3>You're ready when</h3>
+            <ul>
+              <li>You have read every section of the reply.</li>
+              <li>You have corrected anything that was wrong.</li>
+            </ul>
+          </div>
+          <p class="spec-pager"><button type="button" class="action-button" data-prev-step="prepare" data-icon="arrow-left" aria-label="Previous: prepare" title="Previous: prepare" hidden></button><button type="button" class="primary" data-next-step="resolve" data-icon-end="arrow-right" hidden>Next: resolve</button></p>
+        </section>
+
+        <section id="resolve" class="spec-step" aria-labelledby="resolve-heading">
+          <h2 id="resolve-heading">Resolve</h2>
+          <p>Answer the questions that change what gets built. Leave the rest to the builder.</p>
+          <div class="spec-box">
+          <h3>What you do</h3>
+          <ol>
+            <li>Stay in the same conversation.</li>
+            <li>Copy the gap prompt, paste it into the message box, and send it.</li>
+            <li>The tool replies with questions. Type your answers and send them. Ask your project owner if you do not know.</li>
+            <li>Repeat until the tool says no blocking questions remain.</li>
+            <li>Leave implementation decisions alone.</li>
+          </ol>
+
+          </div>
+        <div class="spec-prompt spec-box">
+          <h3>Gap prompt</h3>
+          <p>Paste this in the same conversation as the analysis.</p>
+          <div class="spec-prompt__actions">
+            <button type="button" class="action-button" data-icon="copy" data-copy-prompt="prompt-02-find-gaps" hidden>Copy prompt</button>
+            <span class="spec-prompt__status" role="status"></span>
+          </div>
+          <!-- BEGIN prompt 02-find-gaps -->
+<pre class="spec-prompt__text" id="prompt-02-find-gaps" tabindex="0" role="region" aria-label="find gaps prompt text">You are helping a County of Marin team write a build-ready specification. This is the resolve step.
+
+Using your analysis from this conversation, list every unresolved item that affects what gets built. Sort each one into one of three groups:
+
+- Blocking: the project cannot reasonably proceed without an answer.
+- Important: the project can proceed, but the team should make a decision.
+- Implementation decision: a developer or coding agent can reasonably decide while building.
+
+For each Blocking and Important item, write:
+
+- a plain-language question a non-technical project owner can answer
+- why the answer matters
+- your suggested answer, labeled Recommended, if you have one
+
+For Implementation decision items, list them briefly with no questions. Leave them for the builder.
+
+Rules:
+
+- Do not ask technical questions that a developer can decide.
+- Do not document every possible choice. Gather enough information to build confidently.
+- Do not turn a suggestion into a decision.
+- Treat unclear handling of personal information (who sees it, how long it is kept, whether it is shown) as at least Important.
+
+Ask me the Blocking and Important questions one group at a time. When I answer, record each answer as Confirmed and tell me what is still open. Stop when no Blocking items remain and I say the Important items are settled.</pre>
+<!-- END prompt 02-find-gaps -->
+        </div>
+          <div class="spec-box">
+          <h3>What you get back</h3>
+          <p>A reply that sorts what is still open into three groups:</p>
+          <dl class="spec-terms">
+            <dt>Blocking</dt>
+            <dd>The project cannot go ahead without an answer. You get a plain question.</dd>
+            <dt>Important</dt>
+            <dd>The project can go ahead, but your team should decide. You get a plain question.</dd>
+            <dt>Implementation decision</dt>
+            <dd>The builder can decide while building. It is listed without a question.</dd>
+          </dl>
+          </div>
+          <div class="spec-box">
+            <h3>You're ready when</h3>
+            <ul>
+              <li>The tool says no blocking questions remain.</li>
+              <li>Your team has settled the important ones.</li>
+            </ul>
+          </div>
+          <p class="spec-pager"><button type="button" class="action-button" data-prev-step="analyze" data-icon="arrow-left" aria-label="Previous: analyze" title="Previous: analyze" hidden></button><button type="button" class="primary" data-next-step="spec" data-icon-end="arrow-right" hidden>Next: spec</button></p>
+        </section>
+
+        <section id="spec" class="spec-step" aria-labelledby="spec-heading">
+          <h2 id="spec-heading">Spec</h2>
+          <p>Write the specification and the project brief.</p>
+          <div class="spec-box">
+          <h3>What you do</h3>
+          <ol>
+            <li>Stay in the same conversation.</li>
+            <li>Copy the spec prompt, paste it into the message box, and send it.</li>
+            <li>Wait for the reply. Copy each document into a file named SPEC.md or PROJECT-BRIEF.md.</li>
+            <li>Save a Word copy for your team to review. See "Save a copy for review" below.</li>
+          </ol>
+          </div>
+        <div class="spec-prompt spec-box">
+          <h3>Spec prompt</h3>
+          <p>Creates SPEC.md and PROJECT-BRIEF.md.</p>
+          <div class="spec-prompt__actions">
+            <button type="button" class="action-button" data-icon="copy" data-copy-prompt="prompt-03-create-spec" hidden>Copy prompt</button>
+            <span class="spec-prompt__status" role="status"></span>
+          </div>
+          <!-- BEGIN prompt 03-create-spec -->
+<pre class="spec-prompt__text" id="prompt-03-create-spec" tabindex="0" role="region" aria-label="create spec prompt text">You are helping a County of Marin team write a build-ready specification. This is the spec step.
+
+Write two documents from everything in this conversation: the shared material, your analysis, and my answers.
+
+Document 1: SPEC.md
+
+Use these sections in this order:
+
+1. Summary (project name, problem, users, desired outcome, project owner, who tests it (UAT) and other stakeholders by role or team, specification status)
+2. Platform and delivery (staff or public, security profile: internal, public-web, public-api, authenticated, or custom)
+3. Goals
+4. Non-goals
+5. Users (if the app serves the public, start with the public need)
+6. User stories, with IDs US-001, US-002, and so on, in the form "As a (user), I would like (feature) in order to (reason)", one for each user group
+7. Workflows
+8. Requirements, with IDs REQ-001 and so on. For each: the requirement, priority (P1 must have and critical path, P2 should have, P3 nice to have and can be deferred), evidence status, source, related user story, and acceptance criteria IDs
+9. Content (pages, headings, labels, instructions, alerts, empty states, error messages)
+10. Data (entities, fields with a label of public, internal, personal, or sensitive, relationships, source systems, formats, APIs, ownership, retention)
+11. Integrations
+12. Accessibility (target WCAG 2.2 AA; refer to the County of Marin accessibility standard instead of copying it; list only project-specific needs)
+13. Security (public and private information, authentication, authorization, roles, sensitive information, how personal information is handled, external APIs, secrets, logging, dependencies; refer to the County of Marin security standard)
+14. AI (include only if the finished app itself uses AI)
+15. Acceptance criteria, with IDs AC-001 and so on, each testable, in the form "Given (state), when (action), then (result)"
+16. Open questions, each marked Blocking, Important, or Implementation decision
+17. Sources
+
+Document 2: PROJECT-BRIEF.md
+
+Keep it short, in active voice and plain language. Use these sections: Project, Problem, Why this matters, Users, Experience, Scope, Not included, Key decisions, Deadlines, Key risks and mitigation, Open questions, Success. Leave out Deadlines and Key risks and mitigation when there are none.
+
+Rules:
+
+- Mark every requirement and decision Confirmed, Inferred, Recommended, or Open question.
+- Do not turn an inferred or recommended item into a confirmed requirement.
+- Do not put real people's personal information in either document. Refer to people by role and make up any example data.
+- Do not invent requirements. If something is unknown, put it in Open questions.
+- Do not invent security requirements the project or County standards do not support.
+- Every requirement must trace to a user story or a stated project need.
+- Avoid vague acceptance criteria such as "search works correctly."
+- Do not renumber IDs once you assign them.
+- Write the Problem in the brief as the underlying goal, not the solution. Back Why this matters with evidence from the material and label it Confirmed or Inferred.
+
+Give me both documents as separate Markdown blocks I can copy into files. If you can create Word (.docx) files, also give me one download for each document. If you cannot, say so.</pre>
+<!-- END prompt 03-create-spec -->
+        </div>
+          <div class="spec-box">
+          <h3>Save a copy for review</h3>
+          <p>Keep SPEC.md for the coding agent. Also save a Word copy, so your team can read and comment on the spec.</p>
+          <ul>
+            <li>The spec prompt asks the tool for Word files. If it gives you downloads, save them.</li>
+            <li>If the tool says it cannot make Word files, send "Show both documents as formatted text, not code blocks." Copy it and paste it into a new Word document. Headings and lists usually carry over.</li>
+            <li>Save the Word files where your team keeps project documents.</li>
+          </ul>
+          </div>
+          <div class="spec-box">
+          <h3>What you get back</h3>
+          <ul>
+            <li>SPEC.md is the full build document, with 17 parts from Summary to Sources.</li>
+            <li>PROJECT-BRIEF.md is a short summary for people.</li>
+          </ul>
+          </div>
+          <div class="spec-box">
+          <h3>Source</h3>
+          <p>The spec follows these files:</p>
+          <ul>
+            <li><a href="https://github.com/marincountygov/marin-spec/blob/main/standard/SPEC-STANDARD.md">Marin Spec standard</a></li>
+            <li><a href="https://github.com/marincountygov/marin-spec/tree/main/templates">Blank templates</a></li>
+          </ul>
+          </div>
+          <div class="spec-box">
+            <h3>You're ready when</h3>
+            <ul>
+              <li>Both files are saved.</li>
+            <li>A Word copy is saved for your team to review.</li>
+              <li>SPEC.md lists what is still an open question.</li>
+            </ul>
+          </div>
+          <p class="spec-pager"><button type="button" class="action-button" data-prev-step="resolve" data-icon="arrow-left" aria-label="Previous: resolve" title="Previous: resolve" hidden></button><button type="button" class="primary" data-next-step="review" data-icon-end="arrow-right" hidden>Next: review</button></p>
+        </section>
+
+        <section id="review" class="spec-step" aria-labelledby="review-heading">
+          <h2 id="review-heading">Review</h2>
+          <p>Check the spec before anyone builds. A new conversation gives you a fresh check.</p>
+          <div class="spec-box">
+          <h3>What you do</h3>
+          <ol>
+            <li>Start a new conversation in your AI tool.</li>
+            <li>Upload SPEC.md and PROJECT-BRIEF.md.</li>
+            <li>Copy the review prompt, paste it into the message box, and send it.</li>
+            <li>The tool replies with a list of issues. Type your answers and send them.</li>
+            <li>Send "Update both files with these answers." Save the final versions the same way, as Markdown files and Word files.</li>
+          </ol>
+          </div>
+        <div class="spec-prompt spec-box">
+          <h3>Review prompt</h3>
+          <p>Checks the spec for gaps and unsupported assumptions.</p>
+          <div class="spec-prompt__actions">
+            <button type="button" class="action-button" data-icon="copy" data-copy-prompt="prompt-04-review-spec" hidden>Copy prompt</button>
+            <span class="spec-prompt__status" role="status"></span>
+          </div>
+          <!-- BEGIN prompt 04-review-spec -->
+<pre class="spec-prompt__text" id="prompt-04-review-spec" tabindex="0" role="region" aria-label="review spec prompt text">You are reviewing a County of Marin specification before it goes to a coding agent. This is the review step.
+
+Review the SPEC.md and PROJECT-BRIEF.md I have shared or pasted in this conversation. Be skeptical. If you helped write them in this conversation, review them as if someone else wrote them. Do not rewrite anything yet.
+
+Look for:
+
+- unsupported assumptions
+- missing user needs
+- missing requirements
+- conflicting requirements
+- vague requirements
+- vague or untestable acceptance criteria
+- requirements with no clear user or project need
+- unresolved blocking decisions
+- real personal information about individuals
+- personal-data fields with no decision on who sees them, how long they are kept, or whether they are shown
+- accessibility gaps
+- security gaps
+- data gaps
+- integration gaps
+- scope creep
+- duplicated requirements
+- inferred or recommended items that are written as confirmed
+
+List only material issues. For each one give:
+
+- the ID or section
+- what is wrong
+- why it matters for the build
+- a question or a fix to consider
+
+Group issues by severity: Blocking, Important, Minor. Then say whether the spec is ready for a coding agent, and why.
+
+Wait for me to answer. After I resolve the issues, update SPEC.md and PROJECT-BRIEF.md, keep existing IDs, and show me a short list of what changed. Give me the updated documents the same way as before: Markdown blocks, plus Word (.docx) files if you can.</pre>
+<!-- END prompt 04-review-spec -->
+        </div>
+          <div class="spec-box">
+          <h3>What you get back</h3>
+          <ul>
+            <li>A list of issues sorted into Blocking, Important, and Minor.</li>
+            <li>A verdict on whether the spec is ready for a coding agent.</li>
+            <li>After you answer, updated files and a short list of what changed.</li>
+          </ul>
+          </div>
+          <div class="spec-box">
+            <h3>You're ready when</h3>
+            <ul>
+              <li>The review shows no blocking issues.</li>
+              <li>You have saved the updated files, including the Word copies.</li>
+            </ul>
+          </div>
+          <p class="spec-pager"><button type="button" class="action-button" data-prev-step="spec" data-icon="arrow-left" aria-label="Previous: spec" title="Previous: spec" hidden></button><button type="button" class="primary" data-next-step="build" data-icon-end="arrow-right" hidden>Next: build</button></p>
+        </section>
+
+        <section id="build" class="spec-step" aria-labelledby="build-heading">
+          <h2 id="build-heading">Build</h2>
+          <p>Give the finished spec to an AI coding agent. It plans first, asks only what it must, then builds.</p>
+          <div class="spec-box">
+          <h3>What you do</h3>
+          <ol>
+            <li>Open your coding agent in the project folder. For a new MarinOS app, start from the marin-app-template repository.</li>
+            <li>Add SPEC.md and PROJECT-BRIEF.md to the folder.</li>
+            <li>Copy the build prompt, paste it into your agent's message box, and send it.</li>
+            <li>The agent asks any blocking questions first. Answer them and send your answers.</li>
+            <li>Read the plan. Tell the agent to go ahead only when it looks right.</li>
+          </ol>
+          <p>Choose a coding agent your team has approved:</p>
+          <ul>
+            <li>Claude Code, in a terminal or your code editor</li>
+            <li>OpenAI Codex, or another approved OpenAI coding tool</li>
+            <li>GitHub Copilot in agent mode, in your code editor</li>
+          </ul>
+
+          </div>
+        <div class="spec-prompt spec-box">
+          <h3>Build prompt</h3>
+          <p>Works with any coding agent. Attach SPEC.md first.</p>
+          <div class="spec-prompt__actions">
+            <button type="button" class="action-button" data-icon="copy" data-copy-prompt="prompt-05-build" hidden>Copy prompt</button>
+            <span class="spec-prompt__status" role="status"></span>
+          </div>
+          <!-- BEGIN prompt 05-build -->
+<pre class="spec-prompt__text" id="prompt-05-build" tabindex="0" role="region" aria-label="build prompt text">You are a coding agent. Build the project described in the attached SPEC.md. This is the build step.
+
+Work in this order:
+
+1. Read the complete specification, including Non-goals and Open questions.
+2. Inspect the existing repository.
+3. Read the relevant County of Marin standards and the project's own conventions. For a new MarinOS app, start from marin-app-template and follow the marin-app-builder skill.
+4. Map each requirement to the existing architecture.
+5. List conflicts, missing information, and risky assumptions.
+6. Ask me only the blocking questions, and only before you start.
+7. Write an implementation plan and show it to me.
+8. Implement the plan against the approved specification.
+9. Check each acceptance criterion and record the result.
+10. Report what changed and which requirements are still incomplete.
+
+Rules:
+
+- Do not reinterpret the project's goals. Raise a conflict or a missing decision instead.
+- Do not build anything listed under Non-goals.
+- Make implementation decisions yourself. Note the important ones.
+- Do not commit, push, or publish anything unless I ask.
+- Do not add secrets to the repository.
+- Use made-up test data. Never commit real personal information.</pre>
+<!-- END prompt 05-build -->
+        </div>
+          <div class="spec-box">
+          <h3>What you get back</h3>
+          <ul>
+            <li>A plan first.</li>
+            <li>Working code.</li>
+            <li>A check of each acceptance criterion.</li>
+            <li>A list of anything left unfinished.</li>
+          </ul>
+          </div>
+          <div class="spec-box">
+            <h3>You're ready when</h3>
+            <ul>
+              <li>Every acceptance criterion is checked.</li>
+              <li>You have read the list of anything left unfinished.</li>
+            </ul>
+          </div>
+          <p class="spec-pager"><button type="button" class="action-button" data-prev-step="review" data-icon="arrow-left" aria-label="Previous: review" title="Previous: review" hidden></button></p>
+        </section>
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <marin-app-info app-name="Marin Spec" repo="marin-spec" security-src="security.json">
+        <template data-about>
+          <p>Marin Spec helps turn project research into a build-ready specification. You use your preferred AI tool to review project material, find gaps, write the spec, and check the result.</p>
+          <p>Marin Spec is a guide. It gives you the steps and the prompts to copy. The method is the same in Claude, ChatGPT, and Copilot. Your first pass does not need to be perfect. You can run the steps again as you learn more.</p>
+          <h3>What Marin Spec does not do</h3>
+          <ul>
+            <li>It does not upload or store your files, transcripts, or specs.</li>
+            <li>It does not need an account.</li>
+            <li>It does not run an AI model or ask for an API key.</li>
+            <li>It does not send your project content to Marin Spec servers.</li>
+          </ul>
+          <h3>If something goes wrong</h3>
+          <ul>
+            <li>The tool will not take a file: try another format, such as PDF, Word, or plain text. Save a spreadsheet as CSV. Or paste the text into the message box.</li>
+            <li>The reply stops partway: send "Continue".</li>
+            <li>The conversation gets long and the tool loses track: start a new conversation, upload your files again, and paste in the last reply you want to keep.</li>
+            <li>The tool does not follow the prompt: check that you pasted all of it. If it still does not work, send it again in a new conversation.</li>
+          </ul>
+          <h3>Your files and AI tools</h3>
+          <p>Files you upload to Claude, ChatGPT, Copilot, or another tool follow that tool's terms and the County's rules for using it. Check those rules before you upload anything private or sensitive. Marin Spec cannot see your files, so it cannot remove personal information for you.</p>
+          <h3>Source</h3>
+          <p>The prompts, interview guide, spec standard, and templates are in the <a href="https://github.com/marincountygov/marin-spec">Marin Spec repository</a>. You can use them without this page.</p>
+        </template>
+        <template data-accessibility>
+          <p>Marin Spec aims to meet WCAG 2.2 AA. It uses the MarinOS shell and its shared components. It has not had an independent accessibility review.</p>
+          <p>What works today:</p>
+<ul>
+<li>The six steps are a numbered list in a collapsible left column, and the current step is marked for screen readers.</li>
+<li>Copy prompt buttons report the result in a status message.</li>
+<li>The full text of every prompt stays on the page, so you can select it by hand.</li>
+</ul>
+          <p>If you find a barrier, tell us through Feedback in the footer.</p>
+        </template>
+      </marin-app-info>
+    </main>
+
+    <marin-app-footer app-name="Marin Spec"></marin-app-footer>
+    <marin-app-feedback></marin-app-feedback>
+  </body>
+</html>

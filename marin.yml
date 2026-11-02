@@ -1,0 +1,23 @@
+schema: 1
+
+project:
+  name: Marin Spec
+  repo: marin-spec
+  type: app
+  owner: County of Marin
+  audience: staff
+  status: alpha
+
+platform:
+  shell: 1.22.1
+
+deployment:
+  target: github-pages
+  url: https://marincountygov.github.io/marin-spec/
+
+# Marin Spec gives people prompts to paste into outside AI tools. It never
+# calls an AI model or sends project content anywhere.
+ai:
+  used: false
+
+services: none
