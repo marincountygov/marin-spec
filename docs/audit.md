@@ -23,10 +23,11 @@ Written before building. Records which MarinOS conventions Marin Spec follows an
 - **No explainer on the default view.** The "what is Marin Spec" copy and the privacy notes are in About. The first step opens with the checklist.
 - **Separate pages.** The plan asked for `/accessibility`, `/security` and `/tech`. The shell provides these.
 - **Copy button.** The shell requires Copy buttons to offer Text, HTML and Markdown. A prompt is one block of plain text, and the other formats would change what the user pastes. Copy prompt is a single-format button that uses `marinCopyText`. This is a deliberate exception to review with the standards owner.
-- **Step buttons.** Next is the solid button with a right arrow. Previous is a quiet icon button like Copy and Download. The shell sizes declarative icons only inside quiet buttons, so the arrow on Next is sized in the app's CSS until the shell does it.
-- **Button color.** Solid buttons showed Pico's stock blue, not Marin Blue. The fix is in `marin-ui` 1.33.0 and arrives with the next shell release.
+- **Step buttons.** Next is the solid button with a right arrow. Previous is a quiet icon button like Copy and Download. Shell 1.23.0 sizes the arrow on a solid button, so the app has no CSS of its own for it.
+- **Button color.** Solid buttons showed Pico's stock blue, not Marin Blue. Fixed in `marin-ui` 1.33.0 and shell 1.23.0, which this app now uses.
 - **Skill location.** Skills live in `marin-skills`, so the skill is `marin-skills/marin-spec/`, not `skills/` in this repo.
 - **Prompts in the page.** There is no build step, so `scripts/sync-prompts.py` copies the prompts and interview questions into `index.html`. `--check` and the GitHub workflow keep them in sync.
+- **Feedback landmark.** axe reported the shell's Feedback link as outside every landmark. Shell 1.23.0 makes it a named landmark, and axe now reports nothing for the app.
 - **Scrolling prompt panels.** They take keyboard focus and have names (WCAG 2.1.1). axe-core found this; it now reports nothing for the app.
 - **Tests.** The starter's tests are Python. Marin Spec adds `tests/browser_spec.py` and `tests/test_methodology.py` in the same style.
 - **Icon.** `route` is a Lucide icon (lucide-static 1.66.0, ISC). It is inline in the header and favicon. It is not in `marin-ui/vendor/icons/lucide/` yet, and it is not in the shell's icon set, so it cannot be added to this repo's `vendor/icons/`. Add it to `marin-ui` before registering the app in the catalog.
@@ -35,10 +36,7 @@ Written before building. Records which MarinOS conventions Marin Spec follows an
 
 ## Open items
 
-- Register the app in `marin-os` (`catalog.json`, the directory card, `projects.json`) once the owner approves.
-- Add the `route` icon file to `marin-ui`.
+- Register the app in `marin-os` (`catalog.json`, the directory card, `projects.json`) once the owner asks. The `route` icon is now in `marin-ui` 1.33.1.
 - Run the workflow by hand with the fixtures in Claude, ChatGPT, and Copilot, then refine the standard and prompts. Check that each tool returns Word files when asked.
 - Test with two or three staff who have not seen it, and refine the troubleshooting list from where they stall.
-- Take a shell release that includes `marin-ui` 1.33.0 (Marin Blue buttons), and ask the shell to size icons on solid buttons.
-- The shell's feedback component triggers an axe "region" notice. That is upstream.
-- Flag `marin-skills/marin-app-builder` so a finished `SPEC.md` is a recommended input.
+- Other apps still use older shell releases. Each needs its own shell update to get Marin Blue buttons.
