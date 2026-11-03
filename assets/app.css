@@ -125,8 +125,7 @@
 }
 
 /* Next is the solid main action and ends with an arrow. Previous is a quiet icon button like
-   Copy, Print and Download, 44 px square. The shell sizes declarative icons only inside
-   .action-button, so the arrow on the solid Next button is sized here until it does the same. */
+   Copy, Print and Download, 44 px square. */
 .spec-pager {
   display: flex;
   flex-wrap: wrap;
@@ -142,21 +141,7 @@
 }
 
 .spec-pager .primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
   margin: 0;
-}
-
-.spec-pager .primary > svg {
-  width: 1rem;
-  height: 1rem;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 .spec-pager [hidden] {
