@@ -31,8 +31,9 @@ def inline(text: str) -> str:
 def prompt_html(name: str) -> str:
     text = (ROOT / "prompts" / f"{name}.md").read_text(encoding="utf-8").rstrip("\n")
     label = re.sub(r"^\d+-", "", name).replace("-", " ")
-    # The panel scrolls, so it must take keyboard focus (WCAG 2.1.1) and have a name.
-    return (f'<pre class="spec-prompt__text" id="prompt-{name}" tabindex="0" role="region" '
+    # The prompt shows in full, with no scroll box inside the page (a scroll box is hard to use at 400% zoom and
+    # with a keyboard), so it takes no tab stop; it has a name.
+    return (f'<pre class="spec-prompt__text" id="prompt-{name}" role="region" '
             f'aria-label="{label} prompt text">{html.escape(text, quote=False)}</pre>')
 
 
