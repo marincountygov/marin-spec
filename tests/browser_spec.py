@@ -42,9 +42,14 @@ def run() -> None:
             require(current_steps(page) == ["#prepare"], "Prepare should start as the current step")
             require(page.locator("nav.steps .step-state").all_text_contents() == ["Current", "Up next", "Up next", "Up next", "Up next", "Up next"],
                     "Each step should say Current or Up next in words")
+            require(page.title() == "Marin Spec: Prepare (step 1 of 6)", f"The page title should name the step: {page.title()}")
+            require(page.locator(".steps-progress [role='status'], .steps-progress [aria-live]").count() == 0, "The progress line should not be a live region")
             page.locator("nav.steps a[href='#resolve']").click()
             page.wait_for_function("() => document.querySelector(\"a[aria-current='step']\")?.getAttribute('href') === '#resolve'")
             require(current_steps(page) == ["#resolve"], "Exactly one step should be current")
+            require(page.title() == "Marin Spec: Resolve (step 3 of 6)", f"The page title should follow the step: {page.title()}")
+            require(page.evaluate("document.getElementById(document.querySelector('#resolve > h2').getAttribute('aria-describedby')).textContent") == "Step 3 of 6",
+                    "The step heading should be described by its position")
             require(page.locator("nav.steps .step-state").all_text_contents() == ["Completed", "Completed", "Current", "Up next", "Up next", "Up next"],
                     "Earlier steps should read Completed after skipping ahead")
             require(page.locator("nav.steps svg, nav.steps img").count() == 0, "No icons or images in the step list")
@@ -123,9 +128,11 @@ def run() -> None:
             page.locator("nav.steps a[href='#analyze']").click()
             page.get_by_role("link", name="If something goes wrong").click()
             page.wait_for_function("() => !document.getElementById('about').hidden")
+            page.wait_for_function("() => document.title === 'Marin Spec | County of Marin'")
             require("Continue" in page.locator("#about").inner_text(), "About should list what to do when something goes wrong")
             page.go_back()
             page.wait_for_function("() => !document.getElementById('start').hidden")
+            page.wait_for_function("() => document.title.startsWith('Marin Spec: ')")
 
             # The scrolling prompt panels take keyboard focus and have names.
             for prompt in PROMPTS:
