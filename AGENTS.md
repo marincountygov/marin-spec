@@ -17,7 +17,7 @@ It is a guide, not an AI application. It calls no AI service, uploads and stores
 ## UI rules
 
 - The six steps (Prepare, Analyze, Resolve, Spec, Review, Build) are `section.step` elements under `#start`. They use the shell's steps layout (`nav.steps[data-steps]`; see "Steps layout" in `marin-ui/docs/components.md`): the list is the shell's collapsible left column (`.search-layout`, `data-filter-toggle` labeled "Steps", `data-filter-column-exempt="steps"` on its `aside`), and the shell shows one step at a time, writes "Completed", "Current" or "Up next" under each step, and fills `.steps-progress`, which stays the first child of `.search-results` (the narrow-screen layout needs a visible first child beside the toggle). Without JavaScript they are all visible. Do not turn them into hidden tabs, and do not write step, progress or "On this page" code in `assets/app.js` or `assets/app.css`.
-- The header shows only About and Updates. The shell supplies the footer pages, including Security, Accessibility, and Tech.
+- The header holds only the app's own tabs; Marin Spec has none, so it has no Menu button. The shell supplies the footer pages, including Security, Accessibility, and Tech.
 - Copy prompt uses the shell's `marinCopyText`. Do not write your own copy code.
 - The app stores nothing in the browser: no project content and no settings. The shell keeps its own catalog cache; that is not the app's.
 - "On this page" is the right-hand column on wide screens and sits above the step on narrow ones (`.steps-body`, `[data-steps-toc]`). The shell builds it from the current step's `.step-box` headings, gives each box an id (`step-heading-words`), and rebuilds it when the step changes. A hash can name a step or a box. Do not hand-write the list.

@@ -34,6 +34,8 @@ python3 "$ROOT_DIR/vendor/marinos/audit-shared-helpers.py" "$ROOT_DIR" --fail
 python3 "$ROOT_DIR/vendor/marinos/audit-filter-column.py" "$ROOT_DIR" --fail
 # Lists a step list, Previous and Next buttons or current-step code the app wrote instead of using the shell's steps layout; it must list nothing.
 python3 "$ROOT_DIR/vendor/marinos/audit-steps.py" "$ROOT_DIR" --fail
+# An h1 has one of two sizes (Marin UI 1.41.0); this lists app CSS that sets its own size and must list nothing.
+python3 "$ROOT_DIR/vendor/marinos/audit-h1.py" "$ROOT_DIR" --fail
 
 if command -v node >/dev/null 2>&1; then
   node --check "$ROOT_DIR/vendor/marinos/marinos.js"
