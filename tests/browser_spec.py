@@ -15,7 +15,7 @@ STEPS = ["prepare", "analyze", "resolve", "spec", "review", "build"]
 
 
 def current_steps(page) -> list[str]:
-    return page.eval_on_selector_all(".spec-steps a[aria-current='step']", "els => els.map(e => e.getAttribute('href'))")
+    return page.eval_on_selector_all("nav.steps a[aria-current='step']", "els => els.map(e => e.getAttribute('href'))")
 
 
 def run() -> None:
@@ -36,13 +36,18 @@ def run() -> None:
             ready(page)
 
             # Steps: six links in order, one marked current, and it follows the address.
-            require(page.locator(".spec-steps ol > li").count() == 6, "Expected six steps")
-            require(page.locator(".spec-steps a").all_text_contents() == ["1. Prepare", "2. Analyze", "3. Resolve", "4. Spec", "5. Review", "6. Build"],
+            require(page.locator("nav.steps ol > li").count() == 6, "Expected six steps")
+            require(page.locator("nav.steps .step-name").all_text_contents() == ["1. Prepare", "2. Analyze", "3. Resolve", "4. Spec", "5. Review", "6. Build"],
                     "Step names or order differ")
             require(current_steps(page) == ["#prepare"], "Prepare should start as the current step")
-            page.locator(".spec-steps a[href='#resolve']").click()
+            require(page.locator("nav.steps .step-state").all_text_contents() == ["Current", "Up next", "Up next", "Up next", "Up next", "Up next"],
+                    "Each step should say Current or Up next in words")
+            page.locator("nav.steps a[href='#resolve']").click()
             page.wait_for_function("() => document.querySelector(\"a[aria-current='step']\")?.getAttribute('href') === '#resolve'")
             require(current_steps(page) == ["#resolve"], "Exactly one step should be current")
+            require(page.locator("nav.steps .step-state").all_text_contents() == ["Completed", "Completed", "Current", "Up next", "Up next", "Up next"],
+                    "Earlier steps should read Completed after skipping ahead")
+            require(page.locator("nav.steps svg, nav.steps img").count() == 0, "No icons or images in the step list")
             visible = [s for s in STEPS if page.locator(f"#{s}").is_visible()]
             require(visible == ["resolve"], f"Only the chosen step should show, got {visible}")
             require(page.locator("#resolve > h2").evaluate("el => el === document.activeElement"),
@@ -66,9 +71,9 @@ def run() -> None:
             require(page.locator("#resolve").is_visible(), "Back did not return to the previous step")
             side, results = page.locator(".search-side").bounding_box(), page.locator(".search-results").bounding_box()
             require(side["x"] < results["x"], "The steps should sit in a left column")
-            require(page.locator(".spec-steps ol").evaluate("el => getComputedStyle(el).display") == "block",
+            require(page.locator("nav.steps ol").evaluate("el => getComputedStyle(el).display") == "block",
                     "Steps should be stacked")
-            require(page.locator(".spec-steps a").all_text_contents() == ["1. Prepare", "2. Analyze", "3. Resolve", "4. Spec", "5. Review", "6. Build"],
+            require(page.locator("nav.steps .step-name").all_text_contents() == ["1. Prepare", "2. Analyze", "3. Resolve", "4. Spec", "5. Review", "6. Build"],
                     "Step labels should read '1. Name'")
             require(page.locator("input[type='radio'], [data-platform]").count() == 0, "The tool selector should be gone")
             keys = page.evaluate("() => Object.keys(window.localStorage)")
@@ -82,40 +87,40 @@ def run() -> None:
             require(toggle.get_attribute("aria-expanded") == "false" and page.locator("#steps-panel").is_hidden(),
                     "The column did not collapse")
             require(page.locator(".search-results").bounding_box()["width"] > results["width"], "Content should widen")
-            require(page.locator(".spec-progress").inner_text() == "Step 3 of 6: Resolve",
+            require(page.locator(".steps-progress p").inner_text() == "Step 3 of 6: Resolve",
                     "The current step should show while the column is collapsed")
-            require(page.locator(".spec-progress").is_visible(), "The current step line should be visible when collapsed")
+            require(page.locator(".steps-progress p").is_visible(), "The current step line should be visible when collapsed")
             page.locator("#resolve [data-next-step]").click()
-            require(page.locator(".spec-progress").inner_text() == "Step 4 of 6: Spec", "The step line should follow Next")
+            require(page.locator(".steps-progress p").inner_text() == "Step 4 of 6: Spec", "The step line should follow Next")
             page.locator("#spec [data-prev-step]").click()
             toggle.click()
             require(page.locator("#steps-panel").is_visible(), "The column did not reopen")
 
             # "On this page": the current step's boxes, rebuilt per step, linking to boxes that stay on their step.
-            page.locator(".spec-steps a[href='#prepare']").click()
-            require(page.locator(".spec-toc li a").all_text_contents()[:2] == ["Gather these", "Reduce personal information first"],
+            page.locator("nav.steps a[href='#prepare']").click()
+            require(page.locator(".steps-toc li a").all_text_contents()[:2] == ["Gather these (1. Prepare)", "Reduce personal information first (1. Prepare)"],
                     "On this page should list the Prepare boxes")
-            toc_box, main_box = page.locator(".spec-toc").bounding_box(), page.locator(".spec-main").bounding_box()
+            toc_box, main_box = page.locator(".steps-toc").bounding_box(), page.locator(".steps-main").bounding_box()
             require(toc_box["x"] > main_box["x"] + main_box["width"] - 1, "On this page should be a right-hand column")
-            page.locator(".spec-toc a", has_text="Interview your project owner").click()
+            page.locator(".steps-toc a", has_text="Interview your project owner").click()
             page.wait_for_timeout(300)
-            require(page.locator(".spec-toc").is_visible() and page.locator(".spec-toc").bounding_box()["y"] >= 0,
+            require(page.locator(".steps-toc").is_visible() and page.locator(".steps-toc").bounding_box()["y"] >= 0,
                     "On this page should stay in view while you read")
-            page.locator(".spec-steps a[href='#spec']").click()
-            require("Spec prompt" in page.locator(".spec-toc li a").all_text_contents(), "On this page should list the Spec boxes")
-            page.locator(".spec-toc a", has_text="Save a copy for review").click()
-            page.wait_for_function("() => document.querySelector('.spec-toc a[aria-current=\"location\"]') !== null")
+            page.locator("nav.steps a[href='#spec']").click()
+            require("Spec prompt (4. Spec)" in page.locator(".steps-toc li a").all_text_contents(), "On this page should list the Spec boxes")
+            page.locator(".steps-toc a", has_text="Save a copy for review").click()
+            page.wait_for_function("() => document.querySelector('.steps-toc a[aria-current=\"location\"]') !== null")
             require(page.locator("#spec").is_visible() and page.locator("a[aria-current='step']").get_attribute("href") == "#spec",
                     "A link in On this page should keep the step")
             require(page.locator("#spec-save-a-copy-for-review").is_visible(), "The box should be on screen")
 
             # Every step ends with a "You're ready when" box, and the troubleshooting link reaches About.
             for step in STEPS:
-                require(page.locator(f"#{step} .spec-box h3", has_text="You're ready when").count() == 1, f"{step} lacks a ready check")
-            page.locator(".spec-steps a[href='#spec']").click()
-            require(page.locator("#spec .spec-box h3", has_text="Save a copy for review").count() == 1, "Spec needs the save-for-review box")
+                require(page.locator(f"#{step} .step-box h3", has_text="You're ready when").count() == 1, f"{step} lacks a ready check")
+            page.locator("nav.steps a[href='#spec']").click()
+            require(page.locator("#spec .step-box h3", has_text="Save a copy for review").count() == 1, "Spec needs the save-for-review box")
             require("Word" in page.locator("#spec").inner_text(), "Spec should mention a Word copy")
-            page.locator(".spec-steps a[href='#analyze']").click()
+            page.locator("nav.steps a[href='#analyze']").click()
             page.get_by_role("link", name="If something goes wrong").click()
             page.wait_for_function("() => !document.getElementById('about').hidden")
             require("Continue" in page.locator("#about").inner_text(), "About should list what to do when something goes wrong")
@@ -131,7 +136,7 @@ def run() -> None:
             # Copy prompt: every prompt copies exactly its canonical file and reports it.
             step_of = {"01": "analyze", "02": "resolve", "03": "spec", "04": "review", "05": "build"}
             for prompt in PROMPTS:
-                page.locator(f".spec-steps a[href='#{step_of[prompt.stem[:2]]}']").click()
+                page.locator(f"nav.steps a[href='#{step_of[prompt.stem[:2]]}']").click()
                 button = page.locator(f"[data-copy-prompt='prompt-{prompt.stem}']")
                 require(button.is_visible(), f"No Copy prompt button for {prompt.name}")
                 button.click()
@@ -152,12 +157,12 @@ def run() -> None:
             small_toggle = small.locator(".filter-toggle")
             require(small_toggle.is_visible() and small.locator("#steps-panel").is_hidden(),
                     "The steps column should start closed on narrow screens")
-            require(small.locator(".spec-progress").is_visible(), "The current step should show on narrow screens")
+            require(small.locator(".steps-progress p").is_visible(), "The current step should show on narrow screens")
             for step in STEPS:
                 no_overflow(small)
                 if step != STEPS[-1]:
                     small.locator(f"#{step} [data-next-step]").click()
-            toc_small, main_small = small.locator(".spec-toc").bounding_box(), small.locator(".spec-main").bounding_box()
+            toc_small, main_small = small.locator(".steps-toc").bounding_box(), small.locator(".steps-main").bounding_box()
             require(toc_small["y"] < main_small["y"], "On this page should sit above the step on narrow screens")
             small_toggle.click()
             require(small.locator("#steps-panel").is_visible(), "The steps column did not open")
@@ -174,7 +179,7 @@ def run() -> None:
                         f"{prompt.name} is not readable without JavaScript")
             require(nojs.locator(".spec-interview li").count() >= 20, "Interview questions missing without JavaScript")
             require(all(nojs.locator(f"#{step}").is_visible() for step in STEPS), "A step is hidden without JavaScript")
-            require(nojs.locator(".spec-toc").count() == 0, "On this page needs JavaScript and should not appear without it")
+            require(nojs.locator(".steps-toc").count() == 0, "On this page needs JavaScript and should not appear without it")
             require(nojs.locator("[data-copy-prompt]:visible, [data-next-step]:visible, [data-prev-step]:visible").count() == 0,
                     "Copy, Previous and Next buttons should stay hidden without JavaScript")
             plain.close()
