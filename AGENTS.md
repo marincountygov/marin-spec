@@ -23,7 +23,7 @@ It is a guide, not an AI application. It calls no AI service, uploads and stores
 - "On this page" is the right-hand column on wide screens and sits above the step on narrow ones (`.steps-body`, `[data-steps-toc]`). The shell builds it from the current step's `.step-box` headings, gives each box an id (`step-heading-words`), and rebuilds it when the step changes. A hash can name a step or a box. Do not hand-write the list.
 - Each part of a step ("What you do", a prompt, "What you get back") is a `.step-box`, the shell's bordered section look, the same as the Marin Learn notes. The step heading and its one-line intro sit above the boxes.
 - Use sentence case and plain language. No "view" in button or link text. No unprompted nested lists.
-- Step labels read "1. Name" with no circled numbers, shapes or icons; the state is a word under each name. Completed means earlier than the current step, and nothing is saved. Next is the one solid button, a real button with words and a right arrow. Previous is a quiet icon-only action button with a left arrow, like Copy and Download. The step list is a left column, not the row the Marin Mentions report builder uses, because the whole app is the workflow.
+- Step labels read "1. Name" with no circled numbers, shapes or icons; the state is a word under each name. Completed means earlier than the current step, and nothing is saved. Previous and Next are made by the shell at the end of every step; write none. Next is the one solid button with words and a right arrow, and Previous is a quiet icon-only action button with a left arrow, like Copy and Download. The step list is a left column, not the row the Marin Mentions report builder uses, because the whole app is the workflow.
 
 ## Before finishing
 
