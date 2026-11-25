@@ -32,6 +32,8 @@ python3 "$ROOT_DIR/vendor/marinos/audit-buttons.py" "$ROOT_DIR" --fail
 python3 "$ROOT_DIR/vendor/marinos/audit-shared-helpers.py" "$ROOT_DIR" --fail
 # Lists a filter column written by hand instead of drawn from filters.json; the steps list is exempt and must list nothing.
 python3 "$ROOT_DIR/vendor/marinos/audit-filter-column.py" "$ROOT_DIR" --fail
+# Lists a step list, Previous and Next buttons or current-step code the app wrote instead of using the shell's steps layout; it must list nothing.
+python3 "$ROOT_DIR/vendor/marinos/audit-steps.py" "$ROOT_DIR" --fail
 
 if command -v node >/dev/null 2>&1; then
   node --check "$ROOT_DIR/vendor/marinos/marinos.js"

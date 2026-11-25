@@ -134,11 +134,12 @@ def run() -> None:
             page.wait_for_function("() => !document.getElementById('start').hidden")
             page.wait_for_function("() => document.title.startsWith('Marin Spec: ')")
 
-            # The scrolling prompt panels take keyboard focus and have names.
+            # A prompt shows in full on the page (no scroll box inside the page, so no extra tab stop) and has a name.
             for prompt in PROMPTS:
                 panel = page.locator(f"#prompt-{prompt.stem}")
-                require(panel.get_attribute("tabindex") == "0" and bool(panel.get_attribute("aria-label")),
-                        f"{prompt.name} panel needs tabindex and a name")
+                require(panel.get_attribute("tabindex") is None and bool(panel.get_attribute("aria-label")),
+                        f"{prompt.name} panel needs a name and no tab stop")
+                require(panel.evaluate("el => el.scrollHeight <= el.clientHeight + 1"), f"{prompt.name} should show in full, not in a scroll box")
 
             # Copy prompt: every prompt copies exactly its canonical file and reports it.
             step_of = {"01": "analyze", "02": "resolve", "03": "spec", "04": "review", "05": "build"}

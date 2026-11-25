@@ -42,8 +42,6 @@
 .spec-prompt__text {
   margin: 0;
   padding: 1rem;
-  max-height: 24rem;
-  overflow-y: auto;
   border: 1px solid var(--app-border);
   border-radius: var(--pico-border-radius);
   background: var(--app-bg-soft);
